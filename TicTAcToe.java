@@ -1,6 +1,6 @@
 import java.util.*; 
 
-public class TicTac{
+public class TicTAcToe{
 	public static void main(String[] args) {
 		System.out.println("Welcome to TicTacToe!\nThis is our gameboard:");
 		System.out.println();
@@ -16,39 +16,83 @@ public class TicTac{
 
 	public static int MAXvalue(String[][] current_board, boolean cboard[][]){
 		if(terminal(current_board,cboard)){
-			return utility();
+			return utility(current_board);
 		}
-		int v = MIN_VALUE;
+		// int v = MIN_VALUE;
+		return 0;
 	}
 
-	// public static void actions(){
+	public static void result(String[][]current_board, int place){
+		switch(place){
+			case 1: 
+				current_board[0][0] = "o"; 
+				break;
+			case 2: 
+				current_board[0][1] = "o"; 
+				break;
+			case 3: 
+				current_board[0][2] = "o"; 
+				break;
+			case 4: 
+				current_board[1][0] = "o";
+				break; 
+			case 5: 
+				current_board[1][1] = "o"; 
+				break;
+			case 6: 
+				current_board[1][2] = "o";
+				break;
+			case 7: 
+				current_board[2][0] = "o";
+				break; 
+			case 8: 
+				current_board[2][1] = "o"; 
+				break;
+			case 9: 
+				current_board[2][2] = "o";
+				break;
+		}
 
-	// }
+		return current_board;
+	}
+
+	public static ArrayList<String> actions(String[][] board, boolean[][] cboard){
+		ArrayList<String> actions = new ArrayList<String>(); 
+		for(int i = 0; i < cboard[0].length; i++){
+			for(int j = 0; j <cboard.length; j++){
+				if(cboard[i][j] == true){
+					actions.add(board[i][j]);
+				}
+			}
+		}
+		System.out.println(actions);
+		return actions; 
+	}
 
 	public static void play(String[][]board, boolean[][] cboard){ //very rough work
 		Scanner console = new Scanner(System.in);
 
-		while(console.hasNextInt()){
-			System.out.println("You are playing as X.\nChoose the number in the box that you want to place an X in.");
-			int place = console.nextInt();
-			board = placeX(board,place);
-			cboard = cplaceX(cboard,place);
-		}
+		System.out.println("You are playing as X.\nChoose the number in the box that you want to place an X in.");
+		int place = console.nextInt();
+		board = placeX(board,place);
+		cboard = cplaceX(cboard,place);
+		actions(board,cboard);
 
 		System.out.println("Is the game over?\n" + terminal(board,cboard));
 		//AI ALGORITHM MINMAX!!!
 	}
 
-	public static int utility(){
-		if(didXWin() && !didOWin()){
+	public static int utility(String[][] current_board){
+		if(didXWin(current_board) && !didOWin(current_board)){
 			return 1; 
 		}
-		if(!didXWin() && didOWin()){
+		if(!didXWin(current_board) && didOWin(current_board)){
 			return -1; 
 		}
-		if(!didXWin() && !didOWin()){
+		if(!didXWin(current_board) && !didOWin(current_board)){
 			return 0;
 		}
+		return 0;
 	}
 
 	public static boolean didXWin(String[][] current_board){
@@ -118,6 +162,7 @@ public class TicTac{
 			if(current_board[0][2] == "o" && current_board[1][1] == "o" && current_board[2][0] == "o"){
 				return true;
 			}
+		return false;
 	}
 
 	public static boolean terminal(String[][] current_board, boolean cboard[][]){
