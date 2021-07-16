@@ -14,15 +14,47 @@ public class TicTAcToe{
 		play(board,cboard);
 	}
 
+	public static int MINvalue(String[][] current_board, boolean cboard[][]){
+		if(terminal(current_board,cboard)){
+			return utility(current_board);
+		}
+		int v = Integer.MAX_VALUE;
+		ArrayList<String> actions = actions(current_board, cboard);
+			for (String s: actions){
+				v = min(v,MAXvalue(result(current_board,s),cresult(cboard,s)));
+			}
+		return v;
+	}
+
+
 	public static int MAXvalue(String[][] current_board, boolean cboard[][]){
 		if(terminal(current_board,cboard)){
 			return utility(current_board);
 		}
-		// int v = MIN_VALUE;
-		return 0;
+		int v = Integer.MIN_VALUE;
+		ArrayList<String> actions = actions(current_board, cboard);
+			for (String s: actions){
+				v = max(v,MINvalue(result(current_board,s),cresult(cboard,s)));
+			}
+		return v;
 	}
 
-	public static void result(String[][]current_board, int place){
+
+	public static void min(int a, int b){
+		if(a > b){
+			return b;
+		}
+		return a;
+	}
+
+	public static void max(int a, int b){
+		if(a > b){
+			return a;
+		}
+		return b;
+	}
+ 
+	public static String[][] result(String[][]current_board, int place){
 		switch(place){
 			case 1: 
 				current_board[0][0] = "o"; 
@@ -54,6 +86,40 @@ public class TicTAcToe{
 		}
 
 		return current_board;
+	}
+
+	public static boolean[][] cresult(boolean[][] cboard, int place){
+		switch(place){
+			case 1: 
+				cboard[0][0] = false; 
+				break;
+			case 2: 
+				cboard[0][1] = false; 
+				break;
+			case 3: 
+				cboard[0][2] = false; 
+				break;
+			case 4: 
+				cboard[1][0] = false; 
+				break; 
+			case 5: 
+				cboard[1][1] = false; 
+				break;
+			case 6: 
+				cboard[1][2] = false;  
+				break;
+			case 7: 
+				cboard[2][0] = false; 
+				break; 
+			case 8: 
+				cboard[2][1] = false; 
+				break;
+			case 9: 
+				cboard[2][2] = false; 
+				break;
+		}
+
+		return cboard;
 	}
 
 	public static ArrayList<String> actions(String[][] board, boolean[][] cboard){
