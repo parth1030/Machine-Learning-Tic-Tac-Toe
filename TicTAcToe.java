@@ -22,10 +22,35 @@ public class TicTAcToe{
 		int place = console.nextInt();
 		board = placeX(board,place);
 		cboard = cplaceX(cboard,place);
-		MINvalue(board,cboard);
+		printBoard(board);
+		minimax(board,cboard,false);
+		// MINvalue(board,cboard);
 		printBoard(board);
 		i+=2;
 		System.out.println("Is the game over?\n" + terminal(board,cboard));
+		}
+	}
+
+	public static int minimax(String[][] current_board, boolean cboard[][], boolean maxplayer){
+		if(terminal(current_board,cboard)){
+			return utility(current_board);
+		}
+		if(maxplayer){
+			int v = Integer.MIN_VALUE;
+			ArrayList<String> actions = actions(current_board, cboard);
+			for (String s: actions){
+				//printBoard(current_board);
+				v = max(v,minimax(placeX(current_board,Integer.parseInt(s)),cplaceX(cboard,Integer.parseInt(s)),false));
+			}
+			return v;
+		} else{
+			int v = Integer.MAX_VALUE;
+			ArrayList<String> actions = actions(current_board, cboard);
+			for (String s: actions){
+				//printBoard(current_board);
+				v = min(v,minimax(result(current_board,s),cresult(cboard,s),true));
+			}
+			return v;
 		}
 	}
 
@@ -36,6 +61,7 @@ public class TicTAcToe{
 		int v = Integer.MAX_VALUE;
 		ArrayList<String> actions = actions(current_board, cboard);
 			for (String s: actions){
+				//printBoard(current_board);
 				v = min(v,MAXvalue(result(current_board,s),cresult(cboard,s)));
 			}
 		return v;
@@ -48,7 +74,8 @@ public class TicTAcToe{
 		int v = Integer.MIN_VALUE;
 		ArrayList<String> actions = actions(current_board, cboard);
 			for (String s: actions){
-				v = max(v,MINvalue(result(current_board,s),cresult(cboard,s)));
+				//printBoard(current_board);
+				v = max(v,MINvalue(placeX(current_board,Integer.parseInt(s)),cplaceX(cboard,Integer.parseInt(s))));
 			}
 		return v;
 	}
@@ -136,10 +163,10 @@ public class TicTAcToe{
 
 	public static int utility(String[][] current_board){
 		if(didXWin(current_board) && !didOWin(current_board)){
-			return 1; 
+			return Integer.MAX_VALUE; 
 		}
 		if(!didXWin(current_board) && didOWin(current_board)){
-			return -1; 
+			return Integer.MIN_VALUE; 
 		}
 		if(!didXWin(current_board) && !didOWin(current_board)){
 			return 0;
