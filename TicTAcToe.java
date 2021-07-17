@@ -14,6 +14,21 @@ public class TicTAcToe{
 		play(board,cboard);
 	}
 
+	public static void play(String[][]board, boolean[][] cboard){ //very rough work
+		Scanner console = new Scanner(System.in);
+		int i =0;
+		while(i<9){
+		System.out.println("You are playing as X.\nChoose the number in the box that you want to place an X in.");
+		int place = console.nextInt();
+		board = placeX(board,place);
+		cboard = cplaceX(cboard,place);
+		MINvalue(board,cboard);
+		printBoard(board);
+		i+=2;
+		System.out.println("Is the game over?\n" + terminal(board,cboard));
+		}
+	}
+
 	public static int MINvalue(String[][] current_board, boolean cboard[][]){
 		if(terminal(current_board,cboard)){
 			return utility(current_board);
@@ -26,7 +41,6 @@ public class TicTAcToe{
 		return v;
 	}
 
-
 	public static int MAXvalue(String[][] current_board, boolean cboard[][]){
 		if(terminal(current_board,cboard)){
 			return utility(current_board);
@@ -38,49 +52,34 @@ public class TicTAcToe{
 			}
 		return v;
 	}
-
-
-	public static void min(int a, int b){
-		if(a > b){
-			return b;
-		}
-		return a;
-	}
-
-	public static void max(int a, int b){
-		if(a > b){
-			return a;
-		}
-		return b;
-	}
  
-	public static String[][] result(String[][]current_board, int place){
+	public static String[][] result(String[][]current_board, String place){
 		switch(place){
-			case 1: 
+			case "1": 
 				current_board[0][0] = "o"; 
 				break;
-			case 2: 
+			case "2": 
 				current_board[0][1] = "o"; 
 				break;
-			case 3: 
+			case "3": 
 				current_board[0][2] = "o"; 
 				break;
-			case 4: 
+			case "4": 
 				current_board[1][0] = "o";
 				break; 
-			case 5: 
+			case "5": 
 				current_board[1][1] = "o"; 
 				break;
-			case 6: 
+			case "6": 
 				current_board[1][2] = "o";
 				break;
-			case 7: 
+			case "7": 
 				current_board[2][0] = "o";
 				break; 
-			case 8: 
+			case "8": 
 				current_board[2][1] = "o"; 
 				break;
-			case 9: 
+			case "9": 
 				current_board[2][2] = "o";
 				break;
 		}
@@ -88,33 +87,33 @@ public class TicTAcToe{
 		return current_board;
 	}
 
-	public static boolean[][] cresult(boolean[][] cboard, int place){
+	public static boolean[][] cresult(boolean[][] cboard, String place){
 		switch(place){
-			case 1: 
+			case "1": 
 				cboard[0][0] = false; 
 				break;
-			case 2: 
+			case "2": 
 				cboard[0][1] = false; 
 				break;
-			case 3: 
+			case "3": 
 				cboard[0][2] = false; 
 				break;
-			case 4: 
+			case "4": 
 				cboard[1][0] = false; 
 				break; 
-			case 5: 
+			case "5": 
 				cboard[1][1] = false; 
 				break;
-			case 6: 
+			case "6": 
 				cboard[1][2] = false;  
 				break;
-			case 7: 
+			case "7": 
 				cboard[2][0] = false; 
 				break; 
-			case 8: 
+			case "8": 
 				cboard[2][1] = false; 
 				break;
-			case 9: 
+			case "9": 
 				cboard[2][2] = false; 
 				break;
 		}
@@ -133,19 +132,6 @@ public class TicTAcToe{
 		}
 		System.out.println(actions);
 		return actions; 
-	}
-
-	public static void play(String[][]board, boolean[][] cboard){ //very rough work
-		Scanner console = new Scanner(System.in);
-
-		System.out.println("You are playing as X.\nChoose the number in the box that you want to place an X in.");
-		int place = console.nextInt();
-		board = placeX(board,place);
-		cboard = cplaceX(cboard,place);
-		actions(board,cboard);
-
-		System.out.println("Is the game over?\n" + terminal(board,cboard));
-		//AI ALGORITHM MINMAX!!!
 	}
 
 	public static int utility(String[][] current_board){
@@ -320,6 +306,20 @@ public class TicTAcToe{
 		}
 
 		return cboard;
+	}
+
+	public static int min(int a, int b){
+		if(a > b){
+			return b;
+		}
+		return a;
+	}
+
+	public static int max(int a, int b){
+		if(a > b){
+			return a;
+		}
+		return b;
 	}
 
 	public static void printBoard(String[][] board){
